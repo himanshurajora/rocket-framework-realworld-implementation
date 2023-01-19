@@ -1,7 +1,15 @@
-use rocket::response::Redirect;
-
+#![feature(proc_macro_hygiene, decl_macro)]
 #[macro_use]
 extern crate rocket;
+use rocket::response::Redirect;
+use rocket_contrib::json::Json;
+use serde::{Deserialize, Serialize};
+
+#[derive(Debug, Serialize, Deserialize)]
+struct User {
+    name: String,
+    age: i32,
+}
 
 #[get("/")]
 fn index() -> &'static str {
@@ -25,9 +33,21 @@ fn auth_me(name: String) -> String {
 fn go_to_google() -> Redirect {
     Redirect::to("https://google.com")
 }
-#[launch]
-fn rocket() -> _ {
-    rocket::build()
-        .mount("/", routes![index, hello_world, go_to_google])
-        .mount("/api", routes![auth_me])
+
+#[get("/json", format = "json")]
+fn json_response() -> Json<User> {
+    let user = User {
+        name: String::from("Himanshu"),
+        age: 20,
+    };
+    return Json(user);
+}
+
+fn main() {
+    rocket::ignite()
+        .mount(
+            "/",
+            routes![index, json_reponse, google, hello_word, auth_me],
+        )
+        .launch();
 }
