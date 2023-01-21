@@ -34,7 +34,7 @@ fn go_to_google() -> Redirect {
     Redirect::to("https://google.com")
 }
 
-#[get("/json", format = "json")]
+#[get("/json")]
 fn json_response() -> Json<User> {
     let user = User {
         name: String::from("Himanshu"),
@@ -47,7 +47,7 @@ fn main() {
     rocket::ignite()
         .mount(
             "/",
-            routes![index, json_reponse, google, hello_word, auth_me],
+            routes![index, json_response, go_to_google, hello_world, auth_me],
         )
         .launch();
 }
