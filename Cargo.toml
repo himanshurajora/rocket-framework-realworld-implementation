@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+hyper = { version = "0.14.23", features = ["full"] }
 rocket = "0.4.11"
 serde = { version = "1.0.152", features = ["derive"] }
 rocket_contrib = "0.4.11"
