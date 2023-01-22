@@ -12,5 +12,12 @@ fn hello() -> &'static str {
 }
 
 pub fn rocket() -> Rocket {
-    rocket::ignite().mount("/", routes![hello, routes::users::get_all_users])
+    rocket::ignite().mount(
+        "/",
+        routes![
+            hello,
+            routes::users::get_all_users,
+            routes::test::add_two_numbers
+        ],
+    )
 }
